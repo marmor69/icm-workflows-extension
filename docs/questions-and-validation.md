@@ -1,112 +1,101 @@
-# Geführte Erstellung, Fragen und Validierung
+# Questions and validation
 
-Status: mit dem ICM Field Guide abgeglichener Planungskatalog. Die fünf Einstiegsfragen und der Entscheidungsbrief stammen aus dessen Entscheidungshilfen; D-/S-Fragen konkretisieren anschließend die Architektur des offiziellen ICM-Workspace-Builders. Quelle und Scope jedes Blocks sind gemäß [Quellenprotokoll](sources-and-decisions.md) getrennt ausgewiesen.
+The UI, question wording, diagnostics and generated instructions are English. This catalog combines the Field Guide's decision intake with the official ICM workspace builder's contract questions. [Source details](sources-and-decisions.md) distinguish these sources. [Implementation status](implementation-status.md) distinguishes shipped fields from the broader roadmap.
 
-## 1. Führung und Vorschläge
+## 1. Guidance
 
-Die Oberfläche kombiniert eine optionale Schrittführung mit einer vollständigen, flachen Fragenliste. Nutzer können alles in einem Durchgang beantworten, später gezielt korrigieren und Entwürfe speichern. Eine Fortschrittsanzeige zeigt offene Pflichtangaben, optionale Verbesserungen und begründet übersprungene Fragen getrennt; sie ist kein Qualitätsversprechen.
+Show all intake questions together. Users may answer in any order, edit inferred suggestions and save a draft before everything is complete. Separate observed filenames, suggested meaning and confirmed choices. Do not claim that a detected manifest proves a tool is installed.
 
-Vorschläge enthalten Herkunft und Begründung, beispielsweise „`package.json` gefunden: Node.js könnte für diese Stage relevant sein“. Die Extension unterscheidet beobachtete Dateien, abgeleitete Vorschläge und bestätigte Angaben. Bestätigen oder Bearbeiten ist jederzeit möglich; ein erkannter Ordnername erzeugt noch keine verbindliche Stage.
+The first release uses deterministic suggestions and no model provider. Suggestions explain their evidence, for example: “package.json found: Node.js may be relevant. This does not verify installation.”
 
-Quellgrundlage: `workspaces/workspace-builder/setup/questionnaire.md` Q1–Q4, Discovery-Prozess Schritte 1–9 und `_core/CONVENTIONS.md` Patterns 1, 4, 7, 8, 11–13. Diese Fragen werden für die Oberfläche auf Deutsch paraphrasiert und um konkrete Editorfelder ergänzt.
+## 2. Field Guide intake
 
-## 2. Field-Guide-Einstieg vor der Strukturwahl
+Source: `references/decision-aids/should-this-be-icm.md`, “Five intake questions”.
 
-Quelle: `references/decision-aids/should-this-be-icm.md`, Abschnitt „Five intake questions“. Die Fragen sind deutsch paraphrasiert und werden zusammen angezeigt.
-
-| ID | Frage | Erfasste Information | Konsequenz im Editor |
+| ID | Question | Captured information | Editor consequence |
 |---|---|---|---|
-| F01 | Was wiederholt sich konkret? | Eine beobachtbare Arbeitseinheit, z. B. ein Recherchebericht pro Woche | Keine Pipeline allein aus dem Wunsch nach besserer Ordnung ableiten |
-| F02 | Was muss bearbeitbar bleiben? | Artefakt und menschlicher Prüfbedarf vor dem nächsten Schritt | Editierbare Ergebnisse und Review-Punkte identifizieren |
-| F03 | Was wird zwischen Schritten oder Personen übergeben? | Artefakte, Verantwortliche und Entscheidungen | Sinnvolle Stage-Grenzen und Übergaben vorschlagen |
-| F04 | Welches System ist für Fakten oder Aktionen maßgeblich? | Repository, CRM, Datenbank, Kalender oder Dienst und dessen Zuständigkeit | Referenzieren statt konkurrierende Wahrheitsquelle erzeugen |
-| F05 | Was würde Ordner allein unzureichend machen? | Gleichzeitige Autoren, automatische Verzweigungen, Credentials, sensible Datenübertragung, irreversible Aktionen; „keines“ möglich | Grenzen dokumentieren; Software-/Hybridbedarf anzeigen |
+| F01 | What repeats? Name one concrete unit of work. | An observed recurring job | Do not infer a pipeline from a wish for better organization |
+| F02 | What must stay editable for a person to review? | An artifact and its review point | Identify editable outputs and checkpoints |
+| F03 | What changes hands between steps or people? | Artifacts, owners and decisions | Identify useful stage boundaries |
+| F04 | Which system owns the facts or actions? | Repository, CRM, database, calendar or service | Reference the owner instead of creating a competing truth source |
+| F05 | What would make folders insufficient (concurrency, branching, sensitive data or transactions)? | Operating boundaries; “None” is allowed | Document software or hybrid needs |
 
-Es gibt keinen pauschalen Score, der automatisch ICM auswählt. Der Nutzer erhält eine Empfehlung mit einer konkreten beobachteten Begründung. Einmalige Aufgaben können bei Dateien/Checkliste bleiben, wiederholte stabile Anweisungen bei Prompt/Skill, überprüfbare Artefaktketten bei ICM. Deterministische Systemaktionen gehören in Software; gemischte Anforderungen können einen Hybrid rechtfertigen. „Einfaches Routing“ bleibt eine unterstützte kleine Lösung, wenn ein bestehender Router bereits genügt.
+Recommend the smallest sufficient mechanism: ordinary files/checklist, saved prompt/skill, ICM, deterministic software or a hybrid. The suggestion is a heuristic and remains editable. A user may stop at a decision or keep existing routing without creating stages.
 
-Der Entscheidungsbrief übernimmt aus „Record a reversible verdict“: gewählter Mechanismus, Begründung der kleinsten ausreichenden Lösung, Person und Artefakt am Prüfpunkt, ausdrücklich nicht übernommene Zuständigkeiten sowie ein Auslöser für eine spätere Neubewertung. Bei ICM/Hybrid ergänzt die Handoff-Vorlage gewünschtes Ergebnis, freigegebene Wurzeln, erhaltene Router/Systeme, Betriebsgrenzen und offene Annahmen. Sie bestimmt keine kanonische Architekturform. Der Builder nutzt diese Felder als Eingabe; eine Installation oder automatische Ausführung von ICM Architect ist nicht Teil des MVP.
+The decision brief records the selected mechanism, rationale, human check, what the workflow does not own, and the trigger for reconsidering it. Handoff fields describe requested outcome, allowed scope, existing routers/systems and material uncertainty; they must not preselect a canonical architecture form. Installing or running ICM Architect is outside the first release.
 
-## 3. Fragen beim Entwerfen des Workflows
+## 3. Workflow design questions
 
-Die folgende Liste wird insgesamt angezeigt. Stage-Fragen wiederholen sich als Formular je Stage, nicht als wiederholtes Onboarding beim Öffnen.
+The official workspace builder supplies these questions. They are not presented as additional verbatim Field Guide questions. The first implementation exposes purpose, process, outputs, dependencies, references, tools, checkpoints and audits directly; advanced domain-specific onboarding remains on the roadmap.
 
-| ID | Frage | Beispiel/Default | Verwendung und Quelle |
+| ID | Question | Example/default | Source and purpose |
 |---|---|---|---|
-| D01 | Für welches Arbeitsgebiet ist dieser Ordner gedacht? | „Recherche und Fachartikel“; Ordnername als unbestätigter Vorschlag | Workspace-Zweck; offizielles Setup Q1 |
-| D02 | Was beginnt den Ablauf, und welches Ergebnis soll am Ende vorliegen? | „Quellen zu einem Thema in einen geprüften Artikel verwandeln“ | Workflowgrenze; Setup Q2, Discovery 1 |
-| D03 | Wer nutzt den Workflow, mit welchen KI-Kenntnissen und Werkzeugen? | „Einzelperson mit VS Code und dateilesendem Agenten“ | Hilfetiefe und Toolbedarf; Setup Q3 |
-| D04 | Welche Schritte gibt es, und welche sind optional? | „Recherche, Entwurf, Prüfung“; keine Stage ohne Bestätigung übernehmen | Stufenfolge; Setup Q4, Discovery 2/6 |
-| D05 | Welche eine Aufgabe übernimmt diese Stage? | „Aus Quellen eine belegte Übersicht erstellen“ | Stage-Beschreibung; Pattern 1 |
-| D06 | Welche Eingaben braucht die Stage, aus welcher Datei und welchem Abschnitt? | `shared/style.md`, Abschnitt „Ton“; „Full file“ nur bewusst | Inputs und Scope; Discovery 3, Pattern 4 |
-| D07 | Welche konkreten Arbeitsschritte soll der Agent ausführen? | „Quellen lesen, Aussagen vergleichen, Belege zuordnen“ | Process; Stage-Template |
-| D08 | Welches Artefakt entsteht, wo und in welchem Format? | `output/[topic-slug]-research.md`, Markdown | Outputs und Übergaben; Discovery 3, Pattern 2 |
-| D09 | Welche Regeln gelten dauerhaft, und wo ist ihre maßgebliche Quelle? | Gemeinsame Regeln in `shared/quality-rules.md` | Layer 3, kanonische Quellen; Discovery 4, Pattern 5 |
-| D10 | Welche Tools oder Skills benötigt die Stage wofür? | Datei lesen, Websuche oder `ffmpeg`; „keine zusätzlichen Tools“ explizit möglich | Toolbedarf, Pflicht/optional, Setup-Verweis; Discovery 7/8 |
-| D11 | Wo soll ein Mensch prüfen oder eine Richtung auswählen? | Nach Gliederungsentwurf; bei rein linearer Konvertierung optional | Checkpoints mit Prozessschritt; Pattern 11 |
-| D12 | Woran erkennt man, dass das Ergebnis die Anforderungen erfüllt? | „Jede Tatsachenbehauptung besitzt eine Quellenangabe“ | Audit mit Pass-Kriterium; Pattern 12 |
-| D13 | Welchen konkreten Nutzen soll eine Inhaltsstage liefern? | „Eine direkt anwendbare Handlungsempfehlung“ | Value-Framework-Referenz; nur bei Inhaltsproduktion, Pattern 13 |
-| D14 | Was bleibt zwischen Läufen konstant und was wird pro Lauf neu eingegeben? | Dauerhaft: Stil; pro Lauf: Thema und Quellen | Setup-/Lauftrennung; Discovery 5, Pattern 8 |
+| D01 | What domain is this workspace for? | “Research and technical writing”; folder name is only a suggestion | Setup Q1; workspace scope |
+| D02 | What starts the workflow, and what should it produce? | “Turn source documents into a reviewed report” | Setup Q2, Discovery 1; workflow boundary |
+| D03 | Who will use it, and which tools and AI experience do they have? | “One person using VS Code and a file-reading agent” | Setup Q3; help depth and tool needs |
+| D04 | What are the stages, and which are optional? | “Research, draft, review” | Setup Q4, Discovery 2/6; sequence |
+| D05 | What one job does this stage do? | “Build an evidence-backed summary” | Pattern 1; stage purpose |
+| D06 | Which inputs does it need, from which files and sections? | `shared/style.md`, “Voice Rules”; select “Full file” deliberately | Discovery 3, Pattern 4; scoped Inputs |
+| D07 | Which concrete actions should the agent take? | “Read sources, compare claims, associate citations” | Stage template; Process |
+| D08 | What artifact is produced, where and in what format? | `output/research.md`, Markdown | Discovery 3, Pattern 2; Outputs and handoffs |
+| D09 | Which rules remain stable, and where is their canonical source? | `shared/quality-rules.md` | Discovery 4, Pattern 5; Layer 3 |
+| D10 | Which tools or skills are needed, and why? | “ffmpeg for rendering”; no additional tools is valid | Discovery 7/8; prerequisites and guides |
+| D11 | When should a person review or choose a direction? | “After the outline, the editor chooses an angle” | Pattern 11; Checkpoints |
+| D12 | What explicit condition makes the result pass? | “Every factual claim has a citation” | Pattern 12; Audit |
+| D13 | What concrete value should this content provide? | “An actionable recommendation” | Pattern 13; value framework, where relevant |
+| D14 | What stays constant across runs, and what changes each time? | Stable style; changing topic and sources | Discovery 5, Pattern 8; setup/run separation |
 
-Das Toolformular fragt Name/Fähigkeit, Zweck, zugehörige Prozessschritte, Pflichtstatus, Verfügbarkeit („unbekannt“, „vom Nutzer bestätigt“), Setup-Dokument und Verifikationsanweisung ab. Bei MCP-Tools kann ein Server-/Toolname dokumentiert werden; die Extension behauptet dadurch keine bestehende Verbindung. Zugangsdaten gehören nicht in Markdown oder den Fragebogen.
+Tool references record name, purpose and a workspace-relative setup/usage guide. They document a requirement, not an installation or permission grant. Credentials never belong in these fields. Future versions may add optional/required flags, process-step associations and user-confirmed availability.
 
-## 4. Setup-Fragen des später erzeugten Workspaces
+## 4. Future generated-workspace setup questions
 
-Dies sind Fragen an zukünftige Nutzer des erzeugten Workflows, getrennt von der Gestaltung des Workflows selbst. Sie konfigurieren das wiederverwendbare System. Der Builder leitet sie aus benötigten dauerhaften Variablen ab und erzeugt `setup/questionnaire.md` als flache Liste.
+These questions configure the reusable system for later users. They are separate from the five design-intake questions and are not yet emitted as a dynamic `setup/questionnaire.md` by version 0.1.0.
 
-| ID | Frage, wenn für die Domäne relevant | Beispiel/Default | Ziel |
+| ID | Question, when relevant | Example/default | Destination |
 |---|---|---|---|
-| S01 | Für welche Identität oder Organisation produziert das System? | Neutral ohne Markenbezug | Kanonische Identitätsreferenz |
-| S02 | Welche konkreten Formulierungen passen zum gewünschten Stil, welche nicht? | Je zwei positive/negative Sätze; neutraler Stil als Auswahl | Stilregeln mit anschließendem Review abgeleiteter Regeln |
-| S03 | Welche dauerhaften Gestaltungs-, Qualitäts- oder Compliance-Regeln gelten? | Vorhandenes Regelwerk referenzieren; zusätzliche Regeln optional | Referenzdateien, Audit-Grundlage |
-| S04 | Welche Werkzeuge und Ausgabeformate sollen standardmäßig vorgesehen sein? | Markdown und vorhandene dateilesende Werkzeuge | Tool-Anleitungen und dauerhafte Formatwahl |
-| S05 | Welche angebotenen optionalen Stufen sollen dauerhaft aktiv sein? | Alle Pflichtstufen, optionale ausdrücklich auswählen | Statische Konfiguration nach Prüfung der Übergaben |
-| S06 | Welche gemeinsamen Werte werden bei Codeausgaben benötigt? | Farben, Schriften oder andere domänenspezifische Konstanten | Verweis auf gemeinsame Konstantendatei; nur bei Codeproduktion |
+| S01 | Which identity or organization does this system represent? | Neutral, no brand | Canonical identity reference |
+| S02 | Which concrete sentences fit the desired voice, and which do not? | Two positive and negative examples | Voice rules; review derived rules before accepting |
+| S03 | Which lasting design, quality or compliance rules apply? | Link to an existing rule set | References and audit criteria |
+| S04 | Which tools and output formats should be the default? | Markdown and available file-reading tools | Tool guides and format preferences |
+| S05 | Which optional stages should remain enabled? | Required stages plus explicitly selected options | Static configuration after checking handoffs |
+| S06 | Which shared constants do generated code artifacts require? | Colors, fonts or domain-specific values | Shared constants reference; code workflows only |
 
-Jede Frage besitzt ID, Quellbezug, Typ, Pflichtstatus, Default oder Beispiel, zugeordnete Variable und Zielfelder. Ableitbare Werte werden nicht erneut abgefragt. Änderungen bleiben später über „Konfiguration bearbeiten“ möglich. Ein Default darf keine erfundene Identität, Regel oder Toolverfügbarkeit behaupten.
+Future questions require an ID, source, type, requirement status, default/example, variable and destination. Derive values instead of asking twice. Defaults must not invent identities, policy or installed tools. Topics, project names and concrete sources for a single run belong to the entry stage, not permanent setup.
 
-Thema, aktueller Projektname, konkrete Quellen und Umfang eines einzelnen Durchlaufs werden im Einstieg der ersten Stage erfasst. Eine Zielgruppe kann dauerhaft oder laufabhängig sein; diese Entscheidung wird ausdrücklich getroffen. Solche Laufparameter dürfen nicht irrtümlich als dauerhafte Setup-Platzhalter festgeschrieben werden.
+## 5. Validation design
 
-## 5. Diagnosen und Grenzen
-
-| Regel | Befund | Wirkung | Lösungsvorschlag |
-|---|---|---|---|
-| FIT-01 | Gewünschte Funktion benötigt Transaktionen, automatische Verzweigung oder konkurrierende Schreiber | Hinweis auf Umfangsgrenze | Software-/Hybridbedarf dokumentieren; keine ausführbare Unterstützung behaupten |
-| AUTHORITY-01 | Externes System betroffen, Zuständigkeit oder menschlicher Prüfpunkt ungeklärt | Offene Pflichtfrage im Entscheidungsbrief | F04/F05 und Verantwortlichkeit ergänzen; bei rein lokalen Artefakten nicht verlangen |
-| CONTRACT-01 | Inputs, Process oder Outputs fehlen; Pflichtfeld leer | Fehler | Fehlenden Vertragsteil öffnen |
-| ROUTE-01 | Aufgabe ohne eindeutiges Ziel oder Ziel außerhalb erlaubten Bereichs | Fehler | Ziel wählen oder Scope korrigieren |
-| PATH-01 | Referenzdatei oder gewählter Abschnitt fehlt | Fehler | Vorhandenen Pfad/Abschnitt auswählen |
-| ARTIFACT-01 | Erwartetes Output existiert noch nicht, ist aber durch vorherige Stage definiert | Information | Als geplant anzeigen; keine leere Fake-Datei erzeugen |
-| HANDOFF-01 | Konsument erwartet unvereinbaren Pfad oder Format | Fehler | Artefaktbindung korrigieren |
-| GRAPH-01 | Zyklus, Selbstreferenz oder Abhängigkeit auf spätere Stage | Fehler | Verbindung oder Reihenfolge ändern |
-| GRAPH-02 | Nichtfinales Output hat keinen Konsumenten | Hinweis | Übergabe ergänzen oder als bewusstes Endartefakt markieren |
-| TOOL-01 | Erforderliches Tool ohne Zweck oder Setup-/Nutzungsreferenz | Fehler | Toolbeschreibung ergänzen |
-| TOOL-02 | Verfügbarkeit nicht bestätigt | Hinweis | Manuelle Prüfung anhand dokumentierter Anweisung |
-| CONFIG-01 | Zielplatzhalter ohne Frage oder unbeantworteter Pflichtwert | Fehler für vollständigen Export | Antwort ergänzen; Template-Entwurf weiterhin speicherbar |
-| CONFIG-02 | Laufparameter im dauerhaften Setup | Hinweis zur Prüfung | In erste Stage verschieben |
-| CONFIG-03 | Ungültiger oder unvollständiger bedingter Abschnitt | Fehler | Ganzen Abschnitt kapseln und Paarung korrigieren |
-| REVIEW-01 | Kreative Stage ohne Checkpoint oder kreative/Build-Stage ohne Audit | Hinweis | Vorschlag ergänzen oder Ausnahme begründen |
-| REVIEW-02 | Checkpoint referenziert keinen gültigen Prozessschritt | Fehler | Schritt zuordnen |
-| CONTEXT-01 | Routingdatei länger als 80 Zeilen oder Referenz länger als 200 | Hinweis | Inhalt in separate Referenz verschieben oder aufteilen |
-| CONTEXT-02 | Umfangreiche Regeln direkt im Routing oder doppelte maßgebliche Inhalte | Heuristischer Hinweis | Kanonische Quelle festlegen; keine automatische Löschung |
-| NAME-01 | Ungültige Stage-Nummer, kollidierender oder nicht portabler Dateiname | Fehler | Sicheren Namen vorschlagen; Standarddateien wie `CONTEXT.md` ausnehmen |
-| CONFLICT-01 | Datei seit Vorschau extern verändert | Schreibblockade | Diff erneut prüfen und Änderungen zusammenführen |
-
-Semantische Aussagen wie „diese Stage hat genau eine Verantwortung“ oder „dieses Audit ist sinnvoll“ sind nur teilweise automatisierbar. Sie werden als Review-Fragen oder begründete Hinweise gezeigt, nicht als sichere maschinelle Beweise.
-
-## 6. Nachvollziehbarer Quellenabgleich
-
-| Inhalt des Plans | Konkrete Quelle | Übernahme oder bewusste Grenze |
+| Rule | Finding | Response |
 |---|---|---|
-| F01–F05 | Field Guide: `should-this-be-icm.md`, „Five intake questions“ 1–5 | Vollständig paraphrasiert; vor Strukturwahl |
-| Auswahl Dateien/Checkliste, Prompt/Skill, ICM, Software, Hybrid | Dieselbe Datei, „Choose the lowest sufficient rung“ | Empfehlung mit Begründung; Abbruch ohne Scaffolding zulässig |
-| Entscheidungsbrief und Neubewertung | Dieselbe Datei, „Record a reversible verdict“ | Fünf Entscheidungsfelder, später editierbar |
-| Übergabe an Gestaltung | `field-guide-to-architect-handoff.md`, „Brief“ | Outcome, Scope, bestehende Strukturen, Grenzen und Unsicherheit; keine vorweggenommene Formauswahl |
-| D01–D14 und S01–S06 | Offizieller Workspace-Builder und Templates, oben je Frage zugeordnet | Architektur- und Editorfragen, keine behaupteten Field-Guide-Originalfragen |
-| Bestehenden Router erhalten | `worked-decisions.md`, Fall Repository; `repository-workspace-change-impact.md` | Kleines Routing zuerst; vollständiger System Map liegt außerhalb des MVP |
-| Zuständigkeit externer Systeme | `authority-system-boundary.md` | ICM hält Entwürfe/Verweise; keine Transaktions- oder Berechtigungsbehauptung |
-| Fremde Inhalte und Datenweitergabe | `untrusted-content-boundary.md` | Quellen als Daten behandeln; keine Autorisierung aus Dokumentinhalt ableiten |
-| Grenzen sequenzieller Stages | `orchestration-threshold.md` | Zusätzliche Laufzeitkontrollen für Parallelität/Verzweigung nicht implementieren |
-| Team-/Betriebswechsel und geteilte Referenzen | `deployment-lifecycle.md`, `portability-layers.md` | Bei Bedarf als Grenze erfassen; Hosting, Instanzen und organisationsweite Governance bleiben später |
-| Nachweis der Agenten-Nutzbarkeit | `current-runtime-cold-test-card.md` | Frische Sitzung, Route und Negativtest in späterer Pilotabnahme; keine heutigen Testergebnisse |
+| FIT-01 | Requested concurrency, branching or transactions | Explain software/hybrid boundaries; do not claim an execution engine |
+| CONTRACT-01 | Required name, purpose, process or output format missing | Block export; allow draft saving |
+| ROUTE-01 | Empty task or section/scope | Block export |
+| PATH-01 | Unsafe path or missing scanned reference | Block export; downgrade unconfirmed absence if scan was incomplete |
+| ARTIFACT-01 | Declared upstream output does not exist yet | Treat as planned; do not fabricate the artifact |
+| HANDOFF-01 | Input source is missing, later than the consumer or cyclic | Block export and identify the stage |
+| TOOL-01 | Tool lacks name, purpose or guide | Block export |
+| TOOL-02 | Tool availability not verified | State the limitation; never mark it as executed |
+| CONFIG-01 | Unresolved target placeholder | Block export; preserve draft |
+| REVIEW-01 | Missing checkpoint or audit | Suggest adding a concrete human check/pass condition |
+| NAME-01 | Unsafe filename, traversal or reserved platform name | Block export |
+| CONFLICT-01 | Exported file changed outside the editor or after preview | Block write; reload/review first |
+| IMPORT-01 | Unknown or altered Markdown outside the v1 profile | Preserve file, enter read-only mode |
 
-Die Musterbibliothek dient zur Orientierung und wird nicht automatisch als vollständiger Vorlagenkatalog importiert. Genannte Community-Projekte sind keine verifizierten Produktnachweise. Erweiterte kanonische Formen werden erst nach gesonderter Prüfung der jeweils zuständigen offiziellen Quelle aufgenommen.
+Section-heading existence, full placeholder-to-question coverage, audit semantics, structured checkpoint step references and reference-size guidance remain planned checks. Arbitrary prose cannot be fully validated automatically; subjective quality should be a review suggestion, not a claimed proof.
+
+## 6. Traceability
+
+| Plan content | Source | Adoption or deliberate boundary |
+|---|---|---|
+| F01–F05 | Field Guide `should-this-be-icm.md`, “Five intake questions” | All five questions, before structure choice |
+| Mechanism selection | Same file, “Choose the lowest sufficient rung” | Editable recommendation; no scaffolding required |
+| Decision and revisit trigger | Same file, “Record a reversible verdict” | Persistent, editable decision brief |
+| Handoff boundaries | `field-guide-to-architect-handoff.md` | Outcome, scope, retained systems and uncertainty; no automatic Architect invocation |
+| D/S questions | Official workspace builder and templates | Architecture/editor questions, clearly separate from Field Guide intake |
+| Preserve existing routers | `worked-decisions.md`; `repository-workspace-change-impact.md` | Small routing first; full System Map outside MVP |
+| External authority | `authority-system-boundary.md` | Files hold proposals, not transaction or permission state |
+| Untrusted inputs | `untrusted-content-boundary.md` | Source content cannot authorize actions |
+| Orchestration limits | `orchestration-threshold.md` | No concurrency/branching runtime |
+| Shared deployment | `deployment-lifecycle.md`; `portability-layers.md` | Record relevant limits; infrastructure remains separate |
+| Agent runtime evidence | `current-runtime-cold-test-card.md` | Future fresh-session pilot; no cross-runtime guarantee |
+
+Pattern examples are orientation, not a bulk-imported template library or verified product claims. Additional canonical forms require a separate review of their authoritative contracts.

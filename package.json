@@ -1,0 +1,75 @@
+{
+  "name": "icm-workflows-extension",
+  "displayName": "ICM Workflow Builder",
+  "description": "Build inspectable, folder-based AI workflows with guided questions, visual stages and Markdown routing.",
+  "version": "0.1.0",
+  "publisher": "marmor69",
+  "private": true,
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marmor69/icm-workflows-extension.git"
+  },
+  "main": "./dist/extension.cjs",
+  "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "icm.openBuilder",
+        "title": "ICM: Open Workflow Builder"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "icm.openBuilder",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@20"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:ui": "node scripts/ui-smoke.mjs",
+    "vscode:prepublish": "npm run typecheck && npm run build",
+    "package": "vsce package --no-dependencies --skip-license --out dist/icm-workflow-builder-0.1.0.vsix",
+    "format": "prettier --write src test scripts",
+    "format:check": "prettier --check src test scripts"
+  },
+  "dependencies": {
+    "@xyflow/react": "12.12.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/vscode": "1.96.0",
+    "@vscode/vsce": "4.0.0",
+    "esbuild": "0.28.2",
+    "playwright-core": "1.64.1",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,6 +1,6 @@
 # Produkt- und Umsetzungsplan
 
-Stand: 19. Oktober 2026. Planungsentwurf, keine Implementierung.
+Stand: 19. Oktober 2026. Zielarchitektur und Roadmap. Die Implementierung ist gestartet; der tatsächliche Funktions- und Prüfstand steht in [Implementation status](implementation-status.md).
 
 ## 1. Ziel und Leitentscheidung
 
@@ -75,19 +75,20 @@ Statuswerte der Gestaltung: Entwurf, unvollständig, prüfbereit, strukturell g�
 
 | Ebene | Geplante Dateien | Aufgabe |
 |---|---|---|
-| 0 | `CLAUDE.md`, später optionale Agent-Adapter | Orientierung, Ordnerkarte, Trigger, Einstieg |
+| 0 | `AGENT.md`; `CLAUDE.md` verweist ausschließlich darauf | Orientierung, Ordnerkarte, Trigger, Einstieg |
 | 1 | `CONTEXT.md` im gewählten Workflow-Root | Aufgabe auf Stage oder vorhandene Ressource routen |
 | 2 | `stages/01-name/CONTEXT.md` | Inputs, Process, Outputs; bei Bedarf Checkpoints und Audit |
 | 3 | `references/`, `shared/`, Konfigurationsordner, `skills/` | Dauerhafte Regeln, Tool-Anleitungen und Wissen |
 | 4 | Stage-`output/` und explizite Quellartefakte | Laufbezogene Eingaben und bearbeitbare Zwischenprodukte |
 
-`CLAUDE.md` ist der offizielle Layer-0-Standard. Andere Agenten können dieselben Markdown-Dateien lesen, laden diesen Einstieg aber nicht zwingend automatisch. Unterstützung für `AGENTS.md` ist ein späterer Adapter mit eigenem Kompatibilitätstest.
+`AGENT.md` ist auf Nutzerwunsch die kanonische, agentenunabhängige Einstiegsdatei. `CLAUDE.md` enthält ausschließlich `Read [AGENT.md](AGENT.md).`. Automatisches Laden des Dateinamens ist agentenabhängig; andere Agenten können explizit auf `AGENT.md` verwiesen werden. UI, Fragen, Diagnosen und generierte Anweisungen sind Englisch. Diese Produktentscheidung ersetzt das direkte CLAUDE.md-Profil des ursprünglichen Plans.
 
 ### Beispiel eines später erzeugten Workspaces
 
 ```text
 ausgewaehlter-ordner/
-  CLAUDE.md
+  AGENT.md
+  CLAUDE.md                  # Only points to AGENT.md
   CONTEXT.md
   setup/questionnaire.md
   shared/quality-rules.md
@@ -108,7 +109,7 @@ ausgewaehlter-ordner/
   .icm/editor.json
 ```
 
-Dies ist nur ein Zielbild. In diesem Planungsauftrag werden keine solchen Workflow-Dateien angelegt. Der einfache Routing-Modus benötigt keine künstlichen Stages: Er erzeugt eine `CONTEXT.md` mit Aufgaben-, Datei-/Abschnitts- und Tool-Verweisen; ein Agent-Einstieg ist optional. Der Mehrstufenmodus erzeugt die Stage-Struktur erst nach Vorschau. Bestehende Projektdateien werden nicht automatisch umorganisiert.
+Dies ist das Zielbild; die erste Implementierung exportiert einen begrenzten Teil davon nach Vorschau. Einzelheiten und noch offene Funktionen stehen im Implementierungsstatus. Der einfache Routing-Modus benötigt keine künstlichen Stages: Er erzeugt eine `CONTEXT.md` mit Aufgaben-, Datei-/Abschnitts- und Tool-Verweisen; ein Agent-Einstieg ist optional. Der Mehrstufenmodus erzeugt die Stage-Struktur erst nach Vorschau. Bestehende Projektdateien werden nicht automatisch umorganisiert.
 
 ### Kanonische Daten und Wiederöffnung
 
@@ -205,4 +206,4 @@ Unit-Tests prüfen Graphregeln, Pfadauflösung, Placeholder-Mapping und Diagnose
 10. **Field-Guide-Entscheidung:** Ein einfacher wiederkehrender Auftrag ohne dauerhafte Übergabe darf bei Checkliste/Prompt enden. Ein bestehender ausreichender Router bleibt erhalten. Bei CRM-gestützter Lieferung wird das CRM als maßgebliches System dokumentiert, ohne neue Live-Datensätze oder Integrationen anzulegen. Die fünf Antworten und die begründete Auswahl bleiben nach Wiederöffnung erhalten.
 11. **Datenschutz und Bedienung:** Basisworkflow ohne Modellzugriff; ausgeschlossene Dateien bleiben ungelesen; Kernauswahl und Bearbeitung funktionieren per Tastatur und bei hohem Kontrast.
 
-Für eine Pilotabnahme wird ein erzeugter Beispielworkflow zusätzlich von einem Menschen mit einem geeigneten Agenten in einer frischen Sitzung ohne geerbte Zusammenfassung durchlaufen. Nach der Field-Guide-Cold-Test-Karte werden Runtime/Version, Workspace-Revision, erwartete und tatsächlich gelesene Dateien, menschlicher Stopp und Ergebnis protokolliert. Ein kontrollierter Negativtest auf synthetischen Daten prüft eine unzulässige Scope-Erweiterung ohne reale externe Schreibaktion. Route und Negativtest erhalten getrennt „bestanden“, „fehlgeschlagen“ oder „nicht ausgeführt“; das Ergebnis gilt nur für die getestete Runtime und Route. Das ist eine spätere Produktprüfung, kein Bestandteil dieses Planungsauftrags. Es werden derzeit keine Extension-Tests als ausgeführt behauptet.
+Für eine Pilotabnahme wird ein erzeugter Beispielworkflow zusätzlich von einem Menschen mit einem geeigneten Agenten in einer frischen Sitzung ohne geerbte Zusammenfassung durchlaufen. Nach der Field-Guide-Cold-Test-Karte werden Runtime/Version, Workspace-Revision, erwartete und tatsächlich gelesene Dateien, menschlicher Stopp und Ergebnis protokolliert. Ein kontrollierter Negativtest auf synthetischen Daten prüft eine unzulässige Scope-Erweiterung ohne reale externe Schreibaktion. Route und Negativtest erhalten getrennt „bestanden“, „fehlgeschlagen“ oder „nicht ausgeführt“; das Ergebnis gilt nur für die getestete Runtime und Route. Diese Agentenprüfung steht noch aus. Bereits ausgeführte Code- und UI-Prüfungen werden separat im Implementierungsstatus dokumentiert.

@@ -59,11 +59,11 @@ Der Plan paraphrasiert öffentliche Empfehlungen und verlinkt deren Quellen. Fal
 
 ## Offene Punkte und empfohlene Ausgangswerte
 
-1. **Quellenabgleich abgeschlossen:** Field Guide gelesen, fünf Intake-Fragen und Entscheidungshilfen zugeordnet. Offen bleibt in M0 die praktische UX- und Parser-Validierung; dafür wird jetzt kein Code erstellt.
-2. **Agent-Ziel:** zunächst offizielles `CLAUDE.md` plus portable `CONTEXT.md`; spätere Adapter separat testen.
-3. **UI-Sprache:** Deutsch zuerst; generierte Inhalte in einer pro Workspace gewählten Sprache. Technische Überschriften wie Inputs/Process/Outputs bleiben für den ersten Parser kanonisch.
+1. **Quellenabgleich abgeschlossen:** Field Guide gelesen, fünf Intake-Fragen und Entscheidungshilfen zugeordnet. Offen bleibt in M0 die praktische UX- und Parser-Validierung; der aktuelle Stand ist in [Implementation status](implementation-status.md) dokumentiert.
+2. **Agent target (updated by user):** `AGENT.md` is canonical; `CLAUDE.md` contains only `Read [AGENT.md](AGENT.md).`. Other agents can read the canonical file when directed to it; automatic filename discovery is runtime-specific.
+3. **Language (updated by user):** English UI, questions, diagnostics and generated instructions. The question catalog has been translated accordingly.
 4. **Umgang mit bestehenden Workspaces:** MVP unterstützt offizielle Templates und eigene Exporte; freie Altbestände zuerst nur analysieren und mit expliziter Vorschau migrieren.
 5. **Optionale KI:** Anbieter und Modellwahl erst bei Beauftragung dieser Funktion entscheiden; kein API-Key für den MVP nötig.
 6. **Technische Mindestversionen und Aufwand:** In M0 anhand stabiler VS-Code-APIs, React-Flow-Kompatibilität und Parser-Prototyp bestätigen. Die Aufwandsspanne im Plan ist eine Schätzung, keine Lieferzusage.
 
-Die Dokumentation beschreibt eine geplante Umsetzung. Sie installiert keine Abhängigkeiten, erzeugt keine Extension und startet keinen Workflow.
+Implementation has now been authorized and started. This document records source research and decisions; [Implementation status](implementation-status.md) records the shipped subset and validation evidence.

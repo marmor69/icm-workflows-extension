@@ -6,10 +6,10 @@ Recherche am 19. Oktober 2026.
 
 | Quelle | Ergebnis | Nutzung |
 |---|---|---|
-| [rindig/interpretable-context-methodology](https://github.com/rindig/interpretable-context-methodology) | Gelesen; Commit `02ba5d85c7871b75c7c702a2d8da6524723d53d4` | Normative Grundlage für Workflowarchitektur und vorläufige Fragen |
-| [jonathanmalkik/icm-field-guide](https://github.com/jonathanmalkik/icm-field-guide) | HTTPS-Git-Zugriff meldet „Repository not found“ | Gewünschte Grundlage für Führung und Fragen; noch nicht verifiziert |
+| [rindig/interpretable-context-methodology](https://github.com/rindig/interpretable-context-methodology) | Gelesen; Commit `02ba5d85c7871b75c7c702a2d8da6524723d53d4` | Grundlage des gewählten Architekturprofils und der D-/S-Fragen |
+| [jonathanmalkin/icm-field-guide](https://github.com/jonathanmalkin/icm-field-guide) | Gelesen; Commit `b2dd8131249eea6277376600fdbb1e2149247bd6` | Fünf Einstiegsfragen, Mechanismusentscheidung, Grenzen, Übergabe und spätere Laufzeitprüfung |
 
-„Repository not found“ unterscheidet nicht sicher zwischen falschem Namen, privatem Repository und fehlender Freigabe. Deshalb wird weder ein Inhalt erfunden noch eine endgültige Ursache behauptet. Eine alternative Schreibweise wurde ebenfalls erfolglos geprüft. Für den Abschluss des Quellenabgleichs wird die korrekte URL oder Zugriff auf die genannte Quelle benötigt.
+Die zuvor angegebene Schreibweise `jonathanmalkik` wurde durch die Nutzerkorrektur `jonathanmalkin` ersetzt; der Quellenzugriff ist damit geklärt. Der Field Guide ist Jonathan Malkins inoffizielle Community-Ergänzung. Seine README/NOTICE nennen Jake Van Clief und David McDermott als Autoren des Methodik-Papers. Architekturgrundlage dieses Projekts bleibt das ausdrücklich gewünschte offizielle Repository am oben genannten Commit.
 
 ## Konkret geprüfte ICM-Dateien
 
@@ -24,6 +24,24 @@ Alle folgenden Links sind auf den gelesenen Commit fixiert:
 - [Discovery](https://github.com/rindig/interpretable-context-methodology/blob/02ba5d85c7871b75c7c702a2d8da6524723d53d4/workspaces/workspace-builder/stages/01-discovery/CONTEXT.md), [Mapping](https://github.com/rindig/interpretable-context-methodology/blob/02ba5d85c7871b75c7c702a2d8da6524723d53d4/workspaces/workspace-builder/stages/02-mapping/CONTEXT.md), [Scaffolding](https://github.com/rindig/interpretable-context-methodology/blob/02ba5d85c7871b75c7c702a2d8da6524723d53d4/workspaces/workspace-builder/stages/03-scaffolding/CONTEXT.md), [Questionnaire Design](https://github.com/rindig/interpretable-context-methodology/blob/02ba5d85c7871b75c7c702a2d8da6524723d53d4/workspaces/workspace-builder/stages/04-questionnaire-design/CONTEXT.md), [Validation](https://github.com/rindig/interpretable-context-methodology/blob/02ba5d85c7871b75c7c702a2d8da6524723d53d4/workspaces/workspace-builder/stages/05-validation/CONTEXT.md).
 
 Teile des offiziellen Repositories verwenden noch die Bezeichnung MWP. Der Plan verwendet den Produktnamen ICM und übernimmt die tatsächlich dokumentierten Strukturen. Der README nennt MIT als Lizenz; vor späterem Kopieren von Templates oder Skills sind die jeweiligen Lizenztexte einschließlich eingebundener Drittmaterialien zu prüfen und Hinweise zu erhalten. Dieser Plan paraphrasiert die Methodik und kopiert keine Skill-Pakete.
+
+## Konkret geprüfte Field-Guide-Dateien und Architekturgrenze
+
+Der [gelesene Quellenstand](https://github.com/jonathanmalkin/icm-field-guide/tree/b2dd8131249eea6277376600fdbb1e2149247bd6) umfasst README, SKILL und NOTICE sowie diese gezielt ausgewählten Hilfen:
+
+- [Eignung und fünf Intake-Fragen](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/decision-aids/should-this-be-icm.md).
+- [Handoff-Brief](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/decision-aids/field-guide-to-architect-handoff.md).
+- [Beispielentscheidungen](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/decision-aids/worked-decisions.md).
+- [Cold-Test-Karte](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/decision-aids/current-runtime-cold-test-card.md).
+- [Repository-Änderungsanalyse](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/entities/application-patterns/repository-workspace-change-impact.md).
+- Die Overlays `authority-system-boundary.md`, `untrusted-content-boundary.md`, `orchestration-threshold.md`, `deployment-lifecycle.md` und `portability-layers.md` unter [`references/entities/overlays/`](https://github.com/jonathanmalkin/icm-field-guide/tree/b2dd8131249eea6277376600fdbb1e2149247bd6/references/entities/overlays).
+- [Upstream-Abgrenzung](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/references/upstream-boundary.md) und [NOTICE](https://github.com/jonathanmalkin/icm-field-guide/blob/b2dd8131249eea6277376600fdbb1e2149247bd6/NOTICE.md).
+
+Der aktuelle Field Guide delegiert kanonische Formen, Templates und Workspace-Bau an **ICM Architect**, dessen Quellenstand er in seiner SKILL.md pinnt. Das ist eine relevante Weiterentwicklung gegenüber dem hier ausgewählten sequenziellen Protokoll-Repository. Dieser Plan behauptet deshalb keine vollständige Kompatibilität mit allen Architect-Formen: Der MVP bleibt beim ausdrücklich geplanten Routing-/Pipeline-Profil. Ein „System Map“ oder andere Architect-Formen benötigen vor Aufnahme eine eigene Prüfung der dortigen kanonischen Verträge. Architect wurde im Rahmen dieses Abgleichs weder installiert noch ausgeführt; die Field-Guide-Dateien wurden als Recherchequelle gelesen.
+
+Die fünf Intake-Fragen sind Entscheidungshilfen, keine generischen Stage-Verträge. D-/S-Fragen bleiben ausdrücklich Ableitungen aus dem offiziellen Workspace-Builder. Der Field Guide wählt keine kanonische Form vor der Bedarfsklärung; entsprechend ist die Stufenfolge eine bewusst begrenzte Produktfähigkeit und keine Behauptung, jede ICM-Anwendung sei eine Pipeline.
+
+Der Plan paraphrasiert öffentliche Empfehlungen und verlinkt deren Quellen. Falls später Field-Guide-Material mit der Extension ausgeliefert wird, sind dessen MIT-Lizenz und NOTICE sowie getrennte Upstream-/Drittrechte zu beachten. Private Lehrmaterialien und Community-Beispiele werden nicht als Templates übernommen.
 
 ## Entscheidungsprotokoll
 
@@ -41,7 +59,7 @@ Teile des offiziellen Repositories verwenden noch die Bezeichnung MWP. Der Plan 
 
 ## Offene Punkte und empfohlene Ausgangswerte
 
-1. **Field Guide:** korrekte URL/Zugriff klären; vor M0-Abnahme Workflowführung und Fragen ergänzen. Dies ist die einzige fehlende inhaltliche Pflichtquelle dieses Plans.
+1. **Quellenabgleich abgeschlossen:** Field Guide gelesen, fünf Intake-Fragen und Entscheidungshilfen zugeordnet. Offen bleibt in M0 die praktische UX- und Parser-Validierung; dafür wird jetzt kein Code erstellt.
 2. **Agent-Ziel:** zunächst offizielles `CLAUDE.md` plus portable `CONTEXT.md`; spätere Adapter separat testen.
 3. **UI-Sprache:** Deutsch zuerst; generierte Inhalte in einer pro Workspace gewählten Sprache. Technische Überschriften wie Inputs/Process/Outputs bleiben für den ersten Parser kanonisch.
 4. **Umgang mit bestehenden Workspaces:** MVP unterstützt offizielle Templates und eigene Exporte; freie Altbestände zuerst nur analysieren und mit expliziter Vorschau migrieren.

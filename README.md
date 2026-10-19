@@ -6,6 +6,6 @@ Geplant ist ein grafischer Workflow-Builder für die **Interpretable Context Met
 
 - [Produkt- und Umsetzungsplan](docs/implementation-plan.md): Umfang, Bedienung, Architektur, Dateiformat, Meilensteine und Abnahme.
 - [Fragenkatalog und Prüfregeln](docs/questions-and-validation.md): geführte Erstellung, Vorschläge und fehlende Angaben.
-- [Quellen und offene Entscheidungen](docs/sources-and-decisions.md): geprüfter ICM-Stand und noch ausstehender Field-Guide-Abgleich.
+- [Quellen und offene Entscheidungen](docs/sources-and-decisions.md): geprüfter ICM-Stand und nachvollziehbarer Field-Guide-Abgleich.
 
-Der Plan basiert auf dem offiziellen ICM-Repository. Das zusätzlich gewünschte Repository `jonathanmalkik/icm-field-guide` war beim Abruf am 19. Oktober 2026 nicht zugänglich. Seine konkreten Fragen und Empfehlungen müssen vor Umsetzung des Onboardings noch abgeglichen werden.
+Der Plan verbindet die Architektur des offiziellen ICM-Repositories mit den Einstiegsfragen und Entscheidungshilfen aus [Jonathan Malkins ICM Field Guide](https://github.com/jonathanmalkin/icm-field-guide). Beide Quellen wurden am 19. Oktober 2026 gelesen und auf konkrete Commits festgehalten. Der Field Guide liefert Orientierung; die erste Extension-Version unterstützt bewusst nur Ordner-Routing und sequenzielle Workflows.

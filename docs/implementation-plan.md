@@ -8,7 +8,7 @@ Eine VS-Code-Extension unterstützt Anwender dabei, aus dem aktuellen Projektord
 
 ICM verwendet das Dateisystem als Architektur: ein Agent arbeitet nacheinander in unterschiedlichen Rollen, lädt nur den benötigten Kontext und übergibt Ergebnisse als Dateien. Die Extension ist der Editor für diese Architektur. Erzeugte Workflows bleiben ohne Extension lesbar und verwendbar.
 
-Die Grundlage bilden die fünf Kontextebenen und Stage Contracts des offiziellen Repositories. Quellen, Abweichungen und der noch ausstehende Field Guide sind in [Quellen und Entscheidungen](sources-and-decisions.md) dokumentiert.
+Die Grundlage bilden die fünf Kontextebenen und Stage Contracts des offiziellen Repositories. Quellen, der Field-Guide-Abgleich und bewusste Umfangsgrenzen sind in [Quellen und Entscheidungen](sources-and-decisions.md) dokumentiert.
 
 ## 2. Zielgruppe und erster Umfang
 
@@ -19,7 +19,7 @@ Zielgruppe sind Personen, die wiederkehrende Recherche-, Schreib-, Analyse-, Ent
 - Aufruf über Explorer-Kontextmenü „ICM-Workflow für diesen Ordner erstellen“ und Command Palette.
 - Ordneranalyse mit sichtbarem Umfang und nachvollziehbaren Vorschlägen für vorhandene Dateien, Referenzen und Tools.
 - Zwei Einstiege: **Ordner-Routing** für bestehende Dateien oder **mehrstufiger Workflow** mit nummerierten Stage-Ordnern.
-- Geführte Erstellung, vollständige Formularansicht und jederzeit speicherbarer Entwurf.
+- Geführte Erstellung mit den fünf Field-Guide-Einstiegsfragen, begründeter Mechanismus-Empfehlung, vollständiger Formularansicht und jederzeit speicherbarem Entwurf.
 - Node-Canvas mit Anlegen, Verbinden, Umordnen und Entfernen von Stufen; ergänzende bedienbare Listenansicht.
 - Stage-Editor für Inputs, Process, Outputs, Tools, Checkpoints und Audits.
 - Deterministische Vorschläge und Prüfungen funktionieren ohne KI-Anbieter oder API-Key.
@@ -42,7 +42,7 @@ Keine Agentenausführung, Shell-Ausführung, automatische Toolinstallation, Cred
 
 1. **Ordner bestimmen:** Kontextmenü-URI hat Vorrang; danach Ordner der aktiven Datei innerhalb eines geöffneten Workspace-Roots; sonst Auswahl aus Workspace-Roots. Ohne passenden Ordner öffnet sich ein Ordnerdialog. Das Terminal-Arbeitsverzeichnis ist kein verlässlicher impliziter Kontext. Bei Multi-Root wird der gewählte Root sichtbar angezeigt.
 2. **Bestand prüfen:** Dateibaum, vorhandene `CONTEXT.md`, Agent-Einstiege, Referenzen, Skill-Dateien und Manifeste erfassen. Verzeichnisse wie `.git`, Abhängigkeiten und Build-Ausgaben ausschließen. Inhalte nur bei Bedarf und begrenzt lesen; sensible Dateien wie `.env` standardmäßig ausnehmen. Externe Symlinks nicht verfolgen.
-3. **Ziel beschreiben:** Wiederkehrende Aufgabe, Startmaterial und Ergebnis erfassen. Vorhandene Strukturen als Vorschlag anzeigen, nicht als bestätigte Bedeutung übernehmen.
+3. **Eignung und Ziel klären:** Die fünf Field-Guide-Fragen zu Wiederholung, editierbaren Artefakten, Übergaben, maßgeblichen Systemen und Grenzen erfassen. Als kleinsten ausreichenden Mechanismus Dateien/Checkliste, Prompt/Skill, ICM, Software oder Hybrid empfehlen und die Begründung anzeigen. Bestehendes Routing bevorzugt erhalten. Wer nur einen Index braucht, kann beim Ordner-Routing bleiben; bei fehlendem ICM-Bedarf muss kein Workflow erzeugt werden. Bei ICM/Hybrid folgt die Gestaltung im unterstützten Umfang. Die Empfehlung bleibt bearbeitbar und erzwingt keine Form. Wiederkehrende Aufgabe, Startmaterial und Ergebnis erfassen; gefundene Strukturen bleiben unbestätigte Vorschläge.
 4. **Routing gestalten:** Aufgaben auf konkrete Pfade und möglichst konkrete Abschnitte abbilden. Toolbedarf mit Zweck, benötigter Fähigkeit, Setup-Verweis und Prüfanweisung erfassen.
 5. **Stufen gestalten:** Im Mehrstufenmodus natürliche Übergabepunkte identifizieren und jede Stage mit einem Ergebnisartefakt versehen. Canvas und Formular bearbeiten dasselbe Modell.
 6. **Konfiguration ergänzen:** Gemeinsame Regeln, dauerhafte Einstellungen, optionale Stufen und spätere Laufparameter unterscheiden. Fragen und Defaults siehe [Fragenkatalog](questions-and-validation.md).
@@ -159,7 +159,7 @@ Geplante Modulgrenzen:
 | `webview/` | Canvas, Formulare, Probleme, Markdown-Vorschau |
 | `suggestions/` | Regelbasierte Vorschläge, später optionaler KI-Adapter |
 
-Das interne Modell umfasst Workspace, Route, Stage, Input, Output, ToolReference, Checkpoint, Audit, Question und Diagnostic. Jede Diagnose hat stabile Regel-ID, Schweregrad, Datei/Feld/Node, Erklärung und gegebenenfalls einen expliziten Lösungsvorschlag. Nachrichten zwischen Webview und Host erhalten versionierte Schemas, Request-ID und Validierung; Pfade und Schreibrechte werden im Host geprüft.
+Das interne Modell umfasst Workspace, DecisionBrief, Route, Stage, Input, Output, ToolReference, Checkpoint, Audit, Question und Diagnostic. DecisionBrief hält gewählten Mechanismus, beobachtete Wiederholung, Begründung, menschlichen Prüfpunkt, bestehende Router, maßgebliche Systeme, Grenzen, Annahmen und Neubewertungsauslöser fest. Ein gespeicherter Brief ist eine lokale Planungsnotiz (`setup/decision.md` nach Schreibvorschau), keine zusätzliche Laufzeit-Kontextebene; er wird nicht automatisch für jede Stage geladen. Jede Diagnose hat stabile Regel-ID, Schweregrad, Datei/Feld/Node, Erklärung und gegebenenfalls einen expliziten Lösungsvorschlag. Nachrichten zwischen Webview und Host erhalten versionierte Schemas, Request-ID und Validierung; Pfade und Schreibrechte werden im Host geprüft.
 
 ## 7. Robustheit und Datenschutz
 
@@ -168,17 +168,18 @@ Das interne Modell umfasst Workspace, Route, Stage, Input, Output, ToolReference
 - In nicht vertrauenswürdigen Workspaces nur Ansicht und begrenzte Analyse; aktive Erweiterungsfunktionen folgen VS Code Workspace Trust.
 - Schreiboperationen prüfen Root-Grenzen, Symlinks, Dateikollisionen, Groß-/Kleinschreibung und Änderungen seit der Vorschau. Externe Ressourcen werden im MVP nur als ausdrücklich gewählte Referenzen dokumentiert.
 - Mehrdateiänderungen haben vorab validierte Operationen und einen Wiederherstellungsplan. Atomarität über unterschiedliche Dateisystemprovider wird nicht vorausgesetzt; Teilfehler werden mit betroffenen Pfaden angezeigt.
+- Externe Systeme behalten die Hoheit über ihre Datensätze, Berechtigungen und Transaktionen. Ein Markdown-Artefakt ist kein Versand-, Zahlungs- oder Ausführungsbeleg. Bei Hybridbedarf dokumentiert der Builder diese Grenze; die eigentliche Integration liegt außerhalb des MVP. Gleichzeitige Autoren und automatische Verzweigungen sind Signale für zusätzliche Laufzeitkontrollen, die Routingdateien nicht bereitstellen.
 - Kein Netzwerkzugriff für Basisfunktionen. Ein späterer KI-Assistent zeigt die zu sendenden Inhalte vor Nutzung; Geheimnisse und ausgeschlossene Dateien bleiben ausgeschlossen.
 - Toolvorschläge aus Manifesteinträgen sind Hinweise auf Bedarf, kein Nachweis einer Installation. Auch eine ausgefüllte Prüfanweisung ist keine ausgeführte Prüfung.
 - Scans sind abbrechbar und begrenzt, als Ausgangspunkt auf 10.000 Einträge und 1 MiB je gelesener Textdatei. Überschreitungen erscheinen als unvollständige Analyse; Werte werden nach Profiling angepasst.
 
 ## 8. Meilensteine und Abnahme
 
-Die Reihenfolge ist verbindlicher als eine Zeitschätzung. Als grobe Planung für eine erfahrene Vollzeitperson sind 7–10 Entwicklungswochen plus Feedback sinnvoll; Umfang des Imports und Klärung des Field Guides können dies verändern.
+Die Reihenfolge ist verbindlicher als eine Zeitschätzung. Als grobe Planung für eine erfahrene Vollzeitperson sind 7–10 Entwicklungswochen plus Feedback sinnvoll; Umfang des Imports und Ergebnisse des Parser-Prototyps können dies verändern.
 
 | Phase | Arbeitspaket | Fertig, wenn | Richtwert |
 |---|---|---|---|
-| M0 | Quellenabgleich, Beispiel-Workflows, Parser-Prototyp und UX-Skizze | Field Guide erreichbar und Fragen zugeordnet; offizieller Beispielvertrag lässt sich ohne Semantikverlust lesen/schreiben; Entscheidungen dokumentiert | 0,5–1 Woche |
+| M0 | Quellenabgleich, Beispiel-Workflows, Parser-Prototyp und UX-Skizze | Quellen- und Fragenzuordnung liegt vor; offizieller Beispielvertrag lässt sich ohne Semantikverlust lesen/schreiben; UX und Umfangsgrenzen bestätigt | 0,5–1 Woche |
 | M1 | Extension-Grundgerüst, Ordnerwahl, Scan, Routing-Editor | Routing für einen bestehenden Ordner erstellen, als Diff prüfen, speichern und wieder öffnen möglich | 1 Woche |
 | M2 | Domänenmodell, Vertragseditor, Markdown-Export und Prüfregeln | Drei Stufen inklusive Toolverweisen, Checkpoints und Artefaktübergaben exportieren; Fehlerfälle gezielt erkannt | 1–1,5 Wochen |
 | M3 | Canvas, Verbindungen, Reihenfolge, Undo/Redo und Listenansicht | Grafische und formularbasierte Bearbeitung bleiben synchron; ungültige Zyklen und fehlende Artefakte werden angezeigt | 1–1,5 Wochen |
@@ -186,7 +187,7 @@ Die Reihenfolge ist verbindlicher als eine Zeitschätzung. Als grobe Planung fü
 | M5 | Reimport, Dateiwatcher, Konflikte und Wiederherstellung | Externe Änderungen, Umbenennen, Neustart und Teilfehler verlieren keine Nutzerdaten | 1–1,5 Wochen |
 | M6 | Integration, Barrierefreiheit, Packaging und Pilot | Abnahmeszenarien bestehen auf Windows, macOS, Linux sowie einem Remote-Workspace; installierbares VSIX | 1–1,5 Wochen |
 
-M1 benötigt M0s Architekturentscheidungen, M2 baut auf M1 auf, M3 und M4 auf M2, M5 integriert M3/M4. M6 ist die Freigabegrenze. Der fehlende Field Guide blockiert die endgültige Freigabe des Fragenkatalogs, nicht die hier dokumentierte Architekturplanung.
+M1 benötigt M0s Architekturentscheidungen, M2 baut auf M1 auf, M3 und M4 auf M2, M5 integriert M3/M4. M6 ist die Freigabegrenze. Der Quellenabgleich des Fragenkatalogs ist dokumentiert. M0 ist damit teilweise vorbereitet; Parser-Prototyp und UX-Validierung bleiben spätere Implementierungsarbeiten.
 
 ## 9. Teststrategie und konkrete Abnahmeszenarien
 
@@ -201,6 +202,7 @@ Unit-Tests prüfen Graphregeln, Pfadauflösung, Placeholder-Mapping und Diagnose
 7. **Externe Änderungen:** Eine zwischenzeitlich manuell geänderte `CONTEXT.md` wird nicht still überschrieben; fremde Abschnitte bleiben erhalten.
 8. **Umordnen:** Umnummerieren aktualisiert bekannte Links und erhält existierende Artefakte. Stufe mit konsumiertem Output kann nicht ohne Auflösung der Abhängigkeit entfernt werden.
 9. **Optionalität:** Eine optionale Stufe lässt sich nur deaktivieren, wenn nachfolgende Pflichtinputs weiter versorgt sind. Entscheidungen bleiben statisch, keine Laufzeitverzweigung.
-10. **Datenschutz und Bedienung:** Basisworkflow ohne Modellzugriff; ausgeschlossene Dateien bleiben ungelesen; Kernauswahl und Bearbeitung funktionieren per Tastatur und bei hohem Kontrast.
+10. **Field-Guide-Entscheidung:** Ein einfacher wiederkehrender Auftrag ohne dauerhafte Übergabe darf bei Checkliste/Prompt enden. Ein bestehender ausreichender Router bleibt erhalten. Bei CRM-gestützter Lieferung wird das CRM als maßgebliches System dokumentiert, ohne neue Live-Datensätze oder Integrationen anzulegen. Die fünf Antworten und die begründete Auswahl bleiben nach Wiederöffnung erhalten.
+11. **Datenschutz und Bedienung:** Basisworkflow ohne Modellzugriff; ausgeschlossene Dateien bleiben ungelesen; Kernauswahl und Bearbeitung funktionieren per Tastatur und bei hohem Kontrast.
 
-Für eine Pilotabnahme wird ein erzeugter Beispielworkflow zusätzlich von einem Menschen mit einem geeigneten Agenten durchlaufen. Das ist eine spätere Produktprüfung, kein Bestandteil dieses Planungsauftrags. Es werden derzeit keine Extension-Tests als ausgeführt behauptet.
+Für eine Pilotabnahme wird ein erzeugter Beispielworkflow zusätzlich von einem Menschen mit einem geeigneten Agenten in einer frischen Sitzung ohne geerbte Zusammenfassung durchlaufen. Nach der Field-Guide-Cold-Test-Karte werden Runtime/Version, Workspace-Revision, erwartete und tatsächlich gelesene Dateien, menschlicher Stopp und Ergebnis protokolliert. Ein kontrollierter Negativtest auf synthetischen Daten prüft eine unzulässige Scope-Erweiterung ohne reale externe Schreibaktion. Route und Negativtest erhalten getrennt „bestanden“, „fehlgeschlagen“ oder „nicht ausgeführt“; das Ergebnis gilt nur für die getestete Runtime und Route. Das ist eine spätere Produktprüfung, kein Bestandteil dieses Planungsauftrags. Es werden derzeit keine Extension-Tests als ausgeführt behauptet.

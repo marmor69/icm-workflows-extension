@@ -1,6 +1,6 @@
 # Geführte Erstellung, Fragen und Validierung
 
-Status: vorläufiger Fragenkatalog aus dem offiziellen ICM-Workspace-Builder. Die Fragen des angeforderten Field Guides konnten noch nicht gelesen werden und werden hier nicht als bekannt dargestellt. Vor Umsetzung erfolgt der Abgleich gemäß [Quellenprotokoll](sources-and-decisions.md).
+Status: mit dem ICM Field Guide abgeglichener Planungskatalog. Die fünf Einstiegsfragen und der Entscheidungsbrief stammen aus dessen Entscheidungshilfen; D-/S-Fragen konkretisieren anschließend die Architektur des offiziellen ICM-Workspace-Builders. Quelle und Scope jedes Blocks sind gemäß [Quellenprotokoll](sources-and-decisions.md) getrennt ausgewiesen.
 
 ## 1. Führung und Vorschläge
 
@@ -10,7 +10,23 @@ Vorschläge enthalten Herkunft und Begründung, beispielsweise „`package.json`
 
 Quellgrundlage: `workspaces/workspace-builder/setup/questionnaire.md` Q1–Q4, Discovery-Prozess Schritte 1–9 und `_core/CONVENTIONS.md` Patterns 1, 4, 7, 8, 11–13. Diese Fragen werden für die Oberfläche auf Deutsch paraphrasiert und um konkrete Editorfelder ergänzt.
 
-## 2. Fragen beim Entwerfen des Workflows
+## 2. Field-Guide-Einstieg vor der Strukturwahl
+
+Quelle: `references/decision-aids/should-this-be-icm.md`, Abschnitt „Five intake questions“. Die Fragen sind deutsch paraphrasiert und werden zusammen angezeigt.
+
+| ID | Frage | Erfasste Information | Konsequenz im Editor |
+|---|---|---|---|
+| F01 | Was wiederholt sich konkret? | Eine beobachtbare Arbeitseinheit, z. B. ein Recherchebericht pro Woche | Keine Pipeline allein aus dem Wunsch nach besserer Ordnung ableiten |
+| F02 | Was muss bearbeitbar bleiben? | Artefakt und menschlicher Prüfbedarf vor dem nächsten Schritt | Editierbare Ergebnisse und Review-Punkte identifizieren |
+| F03 | Was wird zwischen Schritten oder Personen übergeben? | Artefakte, Verantwortliche und Entscheidungen | Sinnvolle Stage-Grenzen und Übergaben vorschlagen |
+| F04 | Welches System ist für Fakten oder Aktionen maßgeblich? | Repository, CRM, Datenbank, Kalender oder Dienst und dessen Zuständigkeit | Referenzieren statt konkurrierende Wahrheitsquelle erzeugen |
+| F05 | Was würde Ordner allein unzureichend machen? | Gleichzeitige Autoren, automatische Verzweigungen, Credentials, sensible Datenübertragung, irreversible Aktionen; „keines“ möglich | Grenzen dokumentieren; Software-/Hybridbedarf anzeigen |
+
+Es gibt keinen pauschalen Score, der automatisch ICM auswählt. Der Nutzer erhält eine Empfehlung mit einer konkreten beobachteten Begründung. Einmalige Aufgaben können bei Dateien/Checkliste bleiben, wiederholte stabile Anweisungen bei Prompt/Skill, überprüfbare Artefaktketten bei ICM. Deterministische Systemaktionen gehören in Software; gemischte Anforderungen können einen Hybrid rechtfertigen. „Einfaches Routing“ bleibt eine unterstützte kleine Lösung, wenn ein bestehender Router bereits genügt.
+
+Der Entscheidungsbrief übernimmt aus „Record a reversible verdict“: gewählter Mechanismus, Begründung der kleinsten ausreichenden Lösung, Person und Artefakt am Prüfpunkt, ausdrücklich nicht übernommene Zuständigkeiten sowie ein Auslöser für eine spätere Neubewertung. Bei ICM/Hybrid ergänzt die Handoff-Vorlage gewünschtes Ergebnis, freigegebene Wurzeln, erhaltene Router/Systeme, Betriebsgrenzen und offene Annahmen. Sie bestimmt keine kanonische Architekturform. Der Builder nutzt diese Felder als Eingabe; eine Installation oder automatische Ausführung von ICM Architect ist nicht Teil des MVP.
+
+## 3. Fragen beim Entwerfen des Workflows
 
 Die folgende Liste wird insgesamt angezeigt. Stage-Fragen wiederholen sich als Formular je Stage, nicht als wiederholtes Onboarding beim Öffnen.
 
@@ -33,7 +49,7 @@ Die folgende Liste wird insgesamt angezeigt. Stage-Fragen wiederholen sich als F
 
 Das Toolformular fragt Name/Fähigkeit, Zweck, zugehörige Prozessschritte, Pflichtstatus, Verfügbarkeit („unbekannt“, „vom Nutzer bestätigt“), Setup-Dokument und Verifikationsanweisung ab. Bei MCP-Tools kann ein Server-/Toolname dokumentiert werden; die Extension behauptet dadurch keine bestehende Verbindung. Zugangsdaten gehören nicht in Markdown oder den Fragebogen.
 
-## 3. Setup-Fragen des später erzeugten Workspaces
+## 4. Setup-Fragen des später erzeugten Workspaces
 
 Dies sind Fragen an zukünftige Nutzer des erzeugten Workflows, getrennt von der Gestaltung des Workflows selbst. Sie konfigurieren das wiederverwendbare System. Der Builder leitet sie aus benötigten dauerhaften Variablen ab und erzeugt `setup/questionnaire.md` als flache Liste.
 
@@ -50,10 +66,12 @@ Jede Frage besitzt ID, Quellbezug, Typ, Pflichtstatus, Default oder Beispiel, zu
 
 Thema, aktueller Projektname, konkrete Quellen und Umfang eines einzelnen Durchlaufs werden im Einstieg der ersten Stage erfasst. Eine Zielgruppe kann dauerhaft oder laufabhängig sein; diese Entscheidung wird ausdrücklich getroffen. Solche Laufparameter dürfen nicht irrtümlich als dauerhafte Setup-Platzhalter festgeschrieben werden.
 
-## 4. Diagnosen und Grenzen
+## 5. Diagnosen und Grenzen
 
 | Regel | Befund | Wirkung | Lösungsvorschlag |
 |---|---|---|---|
+| FIT-01 | Gewünschte Funktion benötigt Transaktionen, automatische Verzweigung oder konkurrierende Schreiber | Hinweis auf Umfangsgrenze | Software-/Hybridbedarf dokumentieren; keine ausführbare Unterstützung behaupten |
+| AUTHORITY-01 | Externes System betroffen, Zuständigkeit oder menschlicher Prüfpunkt ungeklärt | Offene Pflichtfrage im Entscheidungsbrief | F04/F05 und Verantwortlichkeit ergänzen; bei rein lokalen Artefakten nicht verlangen |
 | CONTRACT-01 | Inputs, Process oder Outputs fehlen; Pflichtfeld leer | Fehler | Fehlenden Vertragsteil öffnen |
 | ROUTE-01 | Aufgabe ohne eindeutiges Ziel oder Ziel außerhalb erlaubten Bereichs | Fehler | Ziel wählen oder Scope korrigieren |
 | PATH-01 | Referenzdatei oder gewählter Abschnitt fehlt | Fehler | Vorhandenen Pfad/Abschnitt auswählen |
@@ -75,6 +93,20 @@ Thema, aktueller Projektname, konkrete Quellen und Umfang eines einzelnen Durchl
 
 Semantische Aussagen wie „diese Stage hat genau eine Verantwortung“ oder „dieses Audit ist sinnvoll“ sind nur teilweise automatisierbar. Sie werden als Review-Fragen oder begründete Hinweise gezeigt, nicht als sichere maschinelle Beweise.
 
-## 5. Abgleich mit dem Field Guide
+## 6. Nachvollziehbarer Quellenabgleich
 
-Sobald die Quelle erreichbar ist: Commit pinnen, Workflowphasen und Fragen erfassen, jede Frage D/S einer konkreten Guide-Stelle zuordnen, zusätzliche Fragen kenntlich machen, Widersprüche zum offiziellen ICM dokumentieren und den Katalog aktualisieren. Abnahme: keine als Guide-basiert bezeichnete Frage ohne belegten Quellbezug; alle wesentlichen Guide-Schritte sind berücksichtigt oder mit Begründung außerhalb des Umfangs.
+| Inhalt des Plans | Konkrete Quelle | Übernahme oder bewusste Grenze |
+|---|---|---|
+| F01–F05 | Field Guide: `should-this-be-icm.md`, „Five intake questions“ 1–5 | Vollständig paraphrasiert; vor Strukturwahl |
+| Auswahl Dateien/Checkliste, Prompt/Skill, ICM, Software, Hybrid | Dieselbe Datei, „Choose the lowest sufficient rung“ | Empfehlung mit Begründung; Abbruch ohne Scaffolding zulässig |
+| Entscheidungsbrief und Neubewertung | Dieselbe Datei, „Record a reversible verdict“ | Fünf Entscheidungsfelder, später editierbar |
+| Übergabe an Gestaltung | `field-guide-to-architect-handoff.md`, „Brief“ | Outcome, Scope, bestehende Strukturen, Grenzen und Unsicherheit; keine vorweggenommene Formauswahl |
+| D01–D14 und S01–S06 | Offizieller Workspace-Builder und Templates, oben je Frage zugeordnet | Architektur- und Editorfragen, keine behaupteten Field-Guide-Originalfragen |
+| Bestehenden Router erhalten | `worked-decisions.md`, Fall Repository; `repository-workspace-change-impact.md` | Kleines Routing zuerst; vollständiger System Map liegt außerhalb des MVP |
+| Zuständigkeit externer Systeme | `authority-system-boundary.md` | ICM hält Entwürfe/Verweise; keine Transaktions- oder Berechtigungsbehauptung |
+| Fremde Inhalte und Datenweitergabe | `untrusted-content-boundary.md` | Quellen als Daten behandeln; keine Autorisierung aus Dokumentinhalt ableiten |
+| Grenzen sequenzieller Stages | `orchestration-threshold.md` | Zusätzliche Laufzeitkontrollen für Parallelität/Verzweigung nicht implementieren |
+| Team-/Betriebswechsel und geteilte Referenzen | `deployment-lifecycle.md`, `portability-layers.md` | Bei Bedarf als Grenze erfassen; Hosting, Instanzen und organisationsweite Governance bleiben später |
+| Nachweis der Agenten-Nutzbarkeit | `current-runtime-cold-test-card.md` | Frische Sitzung, Route und Negativtest in späterer Pilotabnahme; keine heutigen Testergebnisse |
+
+Die Musterbibliothek dient zur Orientierung und wird nicht automatisch als vollständiger Vorlagenkatalog importiert. Genannte Community-Projekte sind keine verifizierten Produktnachweise. Erweiterte kanonische Formen werden erst nach gesonderter Prüfung der jeweils zuständigen offiziellen Quelle aufgenommen.
